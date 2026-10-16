@@ -1,0 +1,373 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Baltic Hybrid-Threat Barometer</title>
+<style>
+* { box-sizing:border-box; }
+body {
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f4f5f7;
+    color:#222;
+}
+.header {
+    background:#fff;
+    border-bottom:1px solid #ddd;
+    padding:24px 32px 20px;
+}
+.header-inner { max-width:1500px; margin:0 auto; }
+h1 { margin:0 0 7px; font-size:25px; font-weight:600; }
+.subtitle { margin:0; color:#666; font-size:14px; }
+.layout {
+    max-width:1500px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:280px 1fr;
+    min-height:calc(100vh - 100px);
+}
+.sidebar {
+    background:#fff;
+    border-right:1px solid #ddd;
+    padding:24px 16px;
+    overflow-y:auto;
+}
+.nav-section { margin-bottom:25px; }
+.nav-section-title {
+    padding:0 10px 8px;
+    color:#777;
+    font-size:11px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+}
+.nav-button {
+    width:100%;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    border:none;
+    border-radius:7px;
+    background:transparent;
+    padding:10px;
+    margin-bottom:3px;
+    text-align:left;
+    font-size:13px;
+    color:#444;
+    cursor:pointer;
+}
+.nav-button:hover { background:#f1f2f4; }
+.nav-button.active { background:#e9edf2; color:#111; font-weight:600; }
+.nav-number { width:27px; flex:0 0 27px; color:#999;
+               font-size:11px; font-weight:700; }
+.nav-button.active .nav-number { color:#333; }
+.content { padding:24px; min-width:0; }
+.chart-header {
+    background:#fff;
+    border:1px solid #ddd;
+    border-bottom:none;
+    border-radius:9px 9px 0 0;
+    padding:17px 20px;
+}
+.chart-title { margin:0; font-size:18px; font-weight:600; }
+.chart-frame {
+    width:100%;
+    height:calc(100vh - 205px);
+    min-height:650px;
+    border:1px solid #ddd;
+    border-radius:0 0 9px 9px;
+    background:#fff;
+    display:block;
+}
+.note {
+    margin-top:18px;
+    padding:15px 18px;
+    background:#fff;
+    border:1px solid #ddd;
+    border-radius:8px;
+    color:#666;
+    font-size:12px;
+    line-height:1.55;
+}
+.note strong { color:#444; }
+@media (max-width:900px) {
+    .layout { grid-template-columns:1fr; }
+    .sidebar { border-right:none; border-bottom:1px solid #ddd; }
+    .nav-section { margin-bottom:15px; }
+    .nav-button { display:inline-flex; width:auto; margin-right:3px; }
+    .nav-section-title { margin-top:8px; }
+    .chart-frame { height:75vh; min-height:550px; }
+}
+</style>
+</head>
+<body>
+<header class="header">
+<div class="header-inner">
+<h1>Baltic Hybrid-Threat Barometer</h1>
+<p class="subtitle">
+Incident Database incidence layer with GDELT reporting and
+institutional-response analysis
+</p>
+</div>
+</header>
+<div class="layout">
+<aside class="sidebar">
+        <div class="nav-section">
+            <div class="nav-section-title">
+                DOCUMENTATION
+            </div>
+        
+            <button
+                class="nav-button active"
+                data-file="00_about_methodology.html"
+                data-title="About / methodology"
+                onclick="showChart(this)"
+            >
+                <span class="nav-number">
+                    0
+                </span>
+                <span>About / methodology</span>
+            </button>
+            </div>
+        <div class="nav-section">
+            <div class="nav-section-title">
+                HYBRID THREAT DATABASE
+            </div>
+        
+            <button
+                class="nav-button"
+                data-file="01_overall_hybrid_threat_incidence.html"
+                data-title="Overall hybrid threat incidence"
+                onclick="showChart(this)"
+            >
+                <span class="nav-number">
+                    1
+                </span>
+                <span>Overall hybrid threat incidence</span>
+            </button>
+            
+            <button
+                class="nav-button"
+                data-file="02_threat_families.html"
+                data-title="Threat families"
+                onclick="showChart(this)"
+            >
+                <span class="nav-number">
+                    2
+                </span>
+                <span>Threat families</span>
+            </button>
+            
+            <button
+                class="nav-button"
+                data-file="03_lithuania_latvia_estonia_regional.html"
+                data-title="Lithuania / Latvia / Estonia / Regional"
+                onclick="showChart(this)"
+            >
+                <span class="nav-number">
+                    3
+                </span>
+                <span>Lithuania / Latvia / Estonia / Regional</span>
+            </button>
+            
+            <button
+                class="nav-button"
+                data-file="04_category_month_heatmap.html"
+                data-title="Category × month heatmap"
+                onclick="showChart(this)"
+            >
+                <span class="nav-number">
+                    4
+                </span>
+                <span>Category × month heatmap</span>
+            </button>
+            
+            <button
+                class="nav-button"
+                data-file="05_category_small_multiples.html"
+                data-title="Category small multiples"
+                onclick="showChart(this)"
+            >
+                <span class="nav-number">
+                    5
+                </span>
+                <span>Category small multiples</span>
+            </button>
+            
+            <button
+                class="nav-button"
+                data-file="06_database_view.html"
+                data-title="Database view"
+                onclick="showChart(this)"
+            >
+                <span class="nav-number">
+                    6
+                </span>
+                <span>Database view</span>
+            </button>
+            </div>
+        <div class="nav-section">
+            <div class="nav-section-title">
+                REPORTING DATA ANALYSIS
+            </div>
+        
+            <button
+                class="nav-button"
+                data-file="07_baltic_context_analysis.html"
+                data-title="Baltic context analysis"
+                onclick="showChart(this)"
+            >
+                <span class="nav-number">
+                    7
+                </span>
+                <span>Baltic context analysis</span>
+            </button>
+            
+            <button
+                class="nav-button"
+                data-file="08_reporting_category_month_heatmap.html"
+                data-title="Reporting category × month heatmap"
+                onclick="showChart(this)"
+            >
+                <span class="nav-number">
+                    8
+                </span>
+                <span>Reporting category × month heatmap</span>
+            </button>
+            
+            <button
+                class="nav-button"
+                data-file="09_reporting_category_small_multiples.html"
+                data-title="Reporting categories × actual incidence"
+                onclick="showChart(this)"
+            >
+                <span class="nav-number">
+                    9
+                </span>
+                <span>Reporting categories × actual incidence</span>
+            </button>
+            
+            <button
+                class="nav-button"
+                data-file="10_threat_vs_relevant_response.html"
+                data-title="Threat vs relevant response"
+                onclick="showChart(this)"
+            >
+                <span class="nav-number">
+                    10
+                </span>
+                <span>Threat vs relevant response</span>
+            </button>
+            
+            <button
+                class="nav-button"
+                data-file="11_threat_response_heatmap.html"
+                data-title="Threat × response heatmap"
+                onclick="showChart(this)"
+            >
+                <span class="nav-number">
+                    11
+                </span>
+                <span>Threat × response heatmap</span>
+            </button>
+            
+            <button
+                class="nav-button"
+                data-file="12_threat_incidence_vs_response_intensity.html"
+                data-title="Threat incidence vs response intensity"
+                onclick="showChart(this)"
+            >
+                <span class="nav-number">
+                    12
+                </span>
+                <span>Threat incidence vs response intensity</span>
+            </button>
+            
+            <button
+                class="nav-button"
+                data-file="13_response_intensity_over_time.html"
+                data-title="Response intensity over time"
+                onclick="showChart(this)"
+            >
+                <span class="nav-number">
+                    13
+                </span>
+                <span>Response intensity over time</span>
+            </button>
+            </div>
+        <div class="nav-section">
+            <div class="nav-section-title">
+                GDELT ROBUSTNESS
+            </div>
+        
+            <button
+                class="nav-button"
+                data-file="14_threat_reporting_robustness.html"
+                data-title="Threat reporting robustness"
+                onclick="showChart(this)"
+            >
+                <span class="nav-number">
+                    14
+                </span>
+                <span>Threat reporting robustness</span>
+            </button>
+            
+            <button
+                class="nav-button"
+                data-file="15_response_reporting_robustness.html"
+                data-title="Response reporting robustness"
+                onclick="showChart(this)"
+            >
+                <span class="nav-number">
+                    15
+                </span>
+                <span>Response reporting robustness</span>
+            </button>
+            
+            <button
+                class="nav-button"
+                data-file="16_incident_gdelt_robustness.html"
+                data-title="Incident-GDELT robustness"
+                onclick="showChart(this)"
+            >
+                <span class="nav-number">
+                    16
+                </span>
+                <span>Incident-GDELT robustness</span>
+            </button>
+            </div></aside>
+<main class="content">
+<div class="chart-header">
+<h2 class="chart-title" id="chartTitle">Overall hybrid threat incidence</h2>
+</div>
+<iframe id="chartFrame" class="chart-frame"
+        src="00_about_methodology.html"
+        title="Interactive Baltic hybrid-threat visualisation"></iframe>
+<div class="note">
+<strong>Interpretation:</strong>
+Incident Database measures event-level incidents, while GDELT measures
+reporting/event observations. The two layers are deliberately kept
+separate. Where GDELT is matched to an actual incident, the matching rule
+uses a ±3-day window plus overlapping threat category or analytical family;
+this indicates correspondence rather than proving that an individual
+article describes the exact incident. Response intensity is an analytical
+weighting, not a measure of objective response effectiveness.
+</div>
+</main>
+</div>
+<script>
+function showChart(button) {
+    const filename = button.getAttribute("data-file");
+    const title = button.getAttribute("data-title");
+    document.getElementById("chartFrame").src = filename;
+    document.getElementById("chartTitle").textContent = title;
+    document.querySelectorAll(".nav-button").forEach(function(btn) {
+        btn.classList.remove("active");
+    });
+    button.classList.add("active");
+}
+</script>
+</body>
+</html>
